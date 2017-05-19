@@ -1,0 +1,44 @@
+<?php $this->partial('shared/header'); ?>
+
+<form method="post" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <div class="pull-right">
+                    <a class="btn btn-default" href="<?= $next ?>" type="button">Cancel</a>
+                    <button class="btn btn-primary">Import</button>
+                </div>
+                <h3><?= $title ?></h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <?php if($error): ?>
+            <div class="alert alert-danger"><strong>Error!</strong> <?= $error ?></div>
+            <?php endif; ?>
+            <?= $this->form->field('emails') ?>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Notes</strong></p>
+            <ol>
+                <li>Separate each email by new line.</li>
+                <li>If name exists, add it right after email address in the same line separated by comma.</li>
+                <li>Importing many emails may need seconds to appear on the list. Please be patient.</li>
+            </ol>
+            
+            <p>Example</p>
+            
+            <pre>email@address.com
+email2@address.com, Some Name</pre>
+        </div>
+    </div>
+</form>
+
+<style>
+#field-emails{
+    height: calc(100vh - 200px);
+}
+</style>
+<?php $this->partial('shared/footer'); ?>

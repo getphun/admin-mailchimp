@@ -1,0 +1,111 @@
+<?php $this->partial('shared/header'); ?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <form method="get">
+                <?= $this->form->field('email'); ?>
+                <div class="form-group text-right">
+                    <button class="btn btn-default">Find</button>
+                </div>
+            </form>
+            <hr>
+            <form method="get">
+                <?= $this->form->field('status'); ?>
+                <div class="form-group text-right">
+                    <button class="btn btn-default">Filter</button>
+                </div>
+            </form>
+            <hr>
+            
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Total result: <?= number_format($total, 0, '.','.'); ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="page-header">
+                <?php if($this->can_i->create_mailchimp): ?>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary" href="<?= $this->router->to('adminMailchimpEdit', ['id'=>0], ['ref'=>$next]) ?>">Create New</a>
+                    <a class="btn btn-primary" href="<?= $this->router->to('adminMailchimpImport') ?>">Import</a>
+                </div>
+                <?php endif; ?>
+                <h3>Email Subscriber</h3>
+            </div>
+            
+            <?php if($error): ?>
+            <div class="alert alert-danger"><strong>Whoops!</strong> <?= $error ?></div>
+            <?php endif; ?>
+            
+            <?php if($emails): ?>
+            <?php
+                $can_delete     = $this->can_i->remove_mailchimp;
+                $can_edit       = $this->can_i->update_mailchimp;
+            ?>
+            
+            <div class="list-group">
+                <?php foreach($emails as $mail): ?>
+                <div class="list-group-item">
+                    <div class="dropdown pull-right">
+                        <button id="mail-<?= $mail->id ?>" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-xs">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="mail-<?= $mail->id ?>">
+                            <?php if($can_edit): ?>
+                            <li>
+                                <a href="<?= $this->router->to('adminMailchimpEdit', ['id'=>$mail->id], ['ref'=>$next]) ?>">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                            <?php if($can_delete): ?>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="<?= $this->router->to('adminMailchimpRemove', ['id'=>$mail->id], ['ref'=>$next]) ?>" data-confirm="Delete Confirmation" data-confirm-message="Are you sure want to delete this email? This action can't be undone. You may prefer to mark the email as unsubscribe instead" title="Delete" aria-label="Delete">
+                                    <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <h4 class="list-group-item-heading"><?= $mail->email ?> <small><?= $mail->name ?></small></h4>
+                    <p class="list-group-item-text small">
+                        <span title="Created"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> <?= date('M d, Y', strtotime($mail->created)) ?></span>
+                        <span class="label label-<?php
+                            switch($mail->status){
+                                case 'subscribed':
+                                    echo 'primary';
+                                    break;
+                                case 'unsubscribed':
+                                    echo 'danger';
+                                    break;
+                                case 'pending':
+                                    echo 'warning';
+                                    break;
+                                case 'transactional':
+                                    echo 'info';
+                                    break;
+                                case 'cleaned':
+                                    echo 'success';
+                                    break;
+                                default:
+                                    echo 'default';
+                            }
+                        ?>"><?= ucfirst($mail->status) ?></span>
+                    </p>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+            
+            <?php
+                if($pagination)
+                    $this->partial('shared/pagination', ['pagination'=>$pagination]);
+            ?>
+        </div>
+    </div>
+</div>
+
+<?php $this->partial('shared/footer'); ?>
