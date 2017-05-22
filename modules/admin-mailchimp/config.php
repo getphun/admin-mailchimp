@@ -18,6 +18,9 @@ return [
         'admin',
         'site-param'
     ],
+    '_server' => [
+        'PHP Lib cURL' => 'AdminMailchimp\\Library\\Server::curlLib'
+    ],
     '_services' => [
         'mc' => 'AdminMailchimp\\Service\\Mailchimp'
     ],
@@ -25,8 +28,9 @@ return [
         'classes' => [
             'DrewM\\MailChimp\\MailChimp'                   => 'modules/admin-mailchimp/library/MailChimp.php',
             'DrewM\\MailChimp\\Batch'                       => 'modules/admin-mailchimp/library/Batch.php',
+            'AdminMailchimp\\Library\\Server'               => 'modules/admin-mailchimp/library/Server.php',
             'AdminMailchimp\\Controller\\ChimpController'   => 'modules/admin-mailchimp/controller/ChimpController.php',
-            'AdminMailchimp\\Service\\Mailchimp'            => 'modules/admin-mailchimp/service/Mailchimp.php'
+            'AdminMailchimp\\Service\\Mailchimp'            => 'modules/admin-mailchimp/service/Mailchimp.php',
         ],
         'files' => []
     ],
