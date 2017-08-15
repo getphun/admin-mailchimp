@@ -59,10 +59,10 @@ return [
     
     'admin' => [
         'menu' => [
-            'partner' => [
-                'label'     => 'Partner',
-                'icon'      => 'handshake-o',
-                'order'     => 1000,
+            'statistic' => [
+                'label'     => 'Statistic',
+                'order'     => 2000,
+                'icon'      => 'line-chart',
                 'submenu'   => [
                     'mailchimp' => [
                         'label'     => 'Mailchimp',

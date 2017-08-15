@@ -13,8 +13,8 @@ class ChimpController extends \AdminController
     private function _defaultParams(){
         return [
             'title'             => 'Mailchimp',
-            'nav_title'         => 'Partner',
-            'active_menu'       => 'partner',
+            'nav_title'         => 'Statistic',
+            'active_menu'       => 'statistic',
             'active_submenu'    => 'mailchimp',
             'total'             => 0,
             'pagination'        => []
